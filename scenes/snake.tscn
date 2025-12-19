@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://cj4iw3w8uxlio"]
+
+[ext_resource type="Texture2D" uid="uid://c3ls2wy4dcou8" path="res://art/snake/голова.png" id="1_a5f6l"]
+[ext_resource type="Script" uid="uid://bmh7cssmy6edo" path="res://scripts/Snake.cs" id="1_yc36x"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_auphx"]
+size = Vector2(137, 153.5)
+
+[node name="Snake" type="Node2D"]
+position = Vector2(584, 289)
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+position = Vector2(3, 0)
+script = ExtResource("1_yc36x")
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+position = Vector2(-2.503395e-06, 0)
+texture = ExtResource("1_a5f6l")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+position = Vector2(-4.0000024, -25)
+shape = SubResource("RectangleShape2D_auphx")
