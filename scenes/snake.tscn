@@ -9,7 +9,6 @@ size = Vector2(145.5, 133)
 [node name="Snake" type="Node2D"]
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
-position = Vector2(4, 0)
 script = ExtResource("1_yc36x")
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
