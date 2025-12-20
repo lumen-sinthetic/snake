@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ehob0an6on4g"
-path="res://.godot/imported/яблоко.png-72f7a856d669cf6c8fea0788f8efae33.ctex"
+path="res://.godot/imported/яблоко.png-c921150729c3243d77c2d976708f7291.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/snake/яблоко.png"
-dest_files=["res://.godot/imported/яблоко.png-72f7a856d669cf6c8fea0788f8efae33.ctex"]
+source_file="res://art/яблоко.png"
+dest_files=["res://.godot/imported/яблоко.png-c921150729c3243d77c2d976708f7291.ctex"]
 
 [params]
 

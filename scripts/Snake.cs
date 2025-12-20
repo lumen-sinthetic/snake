@@ -1,18 +1,25 @@
 using Godot;
 using System;
+using System.IO;
 using System.Threading;
 
 public partial class Snake : CharacterBody2D
 {
-	public const float Speed = 300.0f;
-	public const float JumpVelocity = -400.0f;
+	const float JumpVelocity = -400.0f;
+	const float Speed = 5f;
+
+	// float DegToRad(float deg)
+	// {
+	// 	return deg * float.Pi / 180;
+	// }
+
+
 
 	void Move()
 	{
 		var vector = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
-		// var axis = Input.GetAxis("ui_left", "ui_right");
-		Position += vector * 4;
-		// Rotation = axis;
+		Position += vector * Speed;
+		Rotation = vector.Angle();
 	}
 
 	public override void _PhysicsProcess(double delta)

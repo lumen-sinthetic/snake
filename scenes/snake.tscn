@@ -4,19 +4,19 @@
 [ext_resource type="Script" uid="uid://bmh7cssmy6edo" path="res://scripts/Snake.cs" id="1_yc36x"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_auphx"]
-size = Vector2(137, 153.5)
+size = Vector2(145.5, 133)
 
 [node name="Snake" type="Node2D"]
-position = Vector2(584, 289)
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
-position = Vector2(3, 0)
+position = Vector2(4, 0)
 script = ExtResource("1_yc36x")
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
-position = Vector2(-2.503395e-06, 0)
+position = Vector2(23.5, -0.9999924)
+rotation = -1.5707964
 texture = ExtResource("1_a5f6l")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-position = Vector2(-4.0000024, -25)
+position = Vector2(-3.2500024, -1.4999924)
 shape = SubResource("RectangleShape2D_auphx")
