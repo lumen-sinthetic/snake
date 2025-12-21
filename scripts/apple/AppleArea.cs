@@ -1,11 +1,9 @@
 using Godot;
 using System;
 
-public partial class Apple : Area2D
+public partial class AppleArea : Area2D
 {
 	// Called when the node enters the scene tree for the first time.
-	readonly Random rand = new();
-
 	public override void _Ready()
 	{
 		BodyEntered += OnBodyEntered;
@@ -16,19 +14,19 @@ public partial class Apple : Area2D
 	{
 	}
 
-	public void InitRandomly()
-	{
-		Position = new Vector2(rand.Next(10, 100), rand.Next(10, 100));
-	}
+	// public void InitRandomly()
+	// {
+	// 	Position = new Vector2(rand.Next(10, 100), rand.Next(10, 100));
+	// }
 
 
 
 	void OnBodyEntered(Node body)
 	{
-		if (body is Snake snake)
+		if (body is SnakeHead snake)
 		{
-			snake.Eat(this);
-			QueueFree();
+			snake.Eat();
+			CallDeferred("queue_free");
 		}
 	}
 }

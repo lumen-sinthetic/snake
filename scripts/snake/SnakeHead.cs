@@ -1,6 +1,6 @@
 using Godot;
 
-public partial class Snake : CharacterBody2D
+public partial class SnakeHead : CharacterBody2D
 {
 	const float Speed = 200f;
 	Vector2 _Destination = Vector2.Right;
@@ -30,7 +30,7 @@ public partial class Snake : CharacterBody2D
 		_Sprite = GetNode<Sprite2D>("Sprite2D");
 	}
 
-	public void Eat(Apple apple)
+	public void Eat()
 	{
 		OpenMouth();
 		EmitSignal(SignalName.ActionRequested);
@@ -49,13 +49,4 @@ public partial class Snake : CharacterBody2D
 			_Sprite.Texture = normalTexture;
 		};
 	}
-
-	// void NewApple()
-	// {
-	// 	var appleScene = GD.Load<PackedScene>("res://scenes/partial/apple.tscn");
-	// 	var apple = appleScene.Instantiate<Apple>();
-	// 	apple.InitRandomly();
-	// 	AddChild(apple);
-
-	// }
 }

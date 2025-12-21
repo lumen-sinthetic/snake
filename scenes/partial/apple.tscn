@@ -1,20 +1,22 @@
-[gd_scene load_steps=4 format=3 uid="uid://b8uc1l8ne5stv"]
+[gd_scene load_steps=5 format=3 uid="uid://b8uc1l8ne5stv"]
 
-[ext_resource type="Script" uid="uid://bhm7bs4gwivtj" path="res://scripts/Apple.cs" id="1_n573g"]
+[ext_resource type="Script" uid="uid://cei7pvg003i6m" path="res://scripts/apple/Apple.cs" id="1_n573g"]
 [ext_resource type="Texture2D" uid="uid://ehob0an6on4g" path="res://art/яблоко.png" id="1_td0ry"]
+[ext_resource type="Script" uid="uid://bhm7bs4gwivtj" path="res://scripts/apple/AppleArea.cs" id="2_gagbx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gagbx"]
 size = Vector2(70.5, 66.75)
 
 [node name="Apple" type="Node2D"]
-
-[node name="Area2D" type="Area2D" parent="."]
 script = ExtResource("1_n573g")
 
-[node name="Sprite2D" type="Sprite2D" parent="Area2D"]
+[node name="Hitbox" type="Area2D" parent="."]
+script = ExtResource("2_gagbx")
+
+[node name="Sprite2D" type="Sprite2D" parent="Hitbox"]
 scale = Vector2(0.7022059, 0.7022059)
 texture = ExtResource("1_td0ry")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2(0, 7)
 shape = SubResource("RectangleShape2D_gagbx")

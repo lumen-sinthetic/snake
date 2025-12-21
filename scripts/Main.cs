@@ -10,9 +10,8 @@ public partial class Main : Node2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		var instance = GetNode("Snake");
-		var snake = instance.GetNode<Snake>("CharacterBody2D");
-		snake.ActionRequested += OnAppleEaten;
+		var snake = GetNode<Snake>("Snake");
+		snake.Head.ActionRequested += OnAppleEaten;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -22,13 +21,12 @@ public partial class Main : Node2D
 
 	void OnAppleEaten()
 	{
-		// GD.Print("Here");
-		// var appleScene = GD.Load<PackedScene>("res://scenes/partial/apple.tscn");
-		// var scene = appleScene.Instantiate();
+		Global.Instance.AddScore();
+		var appleScene = GD.Load<PackedScene>("res://scenes/partial/apple.tscn");
+		var apple = appleScene.Instantiate<Apple>();
 
-
-		// apple.InitRandomly();
-		// AddChild(apple);
+		apple.InitRandomly();
+		CallDeferred("add_child", apple);
 	}
 
 }
