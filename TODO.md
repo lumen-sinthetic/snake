@@ -1,3 +1,1 @@
-- Rewritte apple creating, eating and positioning logic from node to scene
-- Reorganize script folder structure
-- Reorganize snake scripts from one to separate for snake parts.
+

@@ -2,7 +2,7 @@ using Godot;
 
 public partial class SnakeHead : CharacterBody2D
 {
-	const float Speed = 200f;
+	const float Speed = 250f;
 	Vector2 _Destination = Vector2.Right;
 	Sprite2D _Sprite;
 
