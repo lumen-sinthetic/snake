@@ -16,11 +16,7 @@ public partial class Snake : Node2D
 
 	public SnakeHead Head
 	{
-		get
-		{
-			var head = GetNode<SnakeHead>("SnakeHead");
-			return head;
-		}
+		get => GetNode<SnakeHead>("SnakeHead");
 	}
 
 }

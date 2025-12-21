@@ -35,11 +35,7 @@ public partial class Apple : Node2D
 
 	public AppleArea Area
 	{
-		get
-		{
-			var area = GetNode<AppleArea>("Hitbox");
-			return area;
-		}
+		get => GetNode<AppleArea>("Hitbox");
 	}
 
 
