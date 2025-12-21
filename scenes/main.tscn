@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://du8bd10sloh8o"]
+
+[ext_resource type="PackedScene" uid="uid://cj4iw3w8uxlio" path="res://scenes/partial/snake.tscn" id="1_0wfyh"]
+[ext_resource type="Script" uid="uid://cggqh2tt5os6k" path="res://scripts/Main.cs" id="1_sugp2"]
+[ext_resource type="PackedScene" uid="uid://b8uc1l8ne5stv" path="res://scenes/partial/apple.tscn" id="2_sugp2"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_sugp2")
+
+[node name="Snake" parent="." instance=ExtResource("1_0wfyh")]
+position = Vector2(236, 304)
+
+[node name="Apple" parent="." instance=ExtResource("2_sugp2")]
+position = Vector2(791, 302)
