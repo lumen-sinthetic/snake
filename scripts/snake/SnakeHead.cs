@@ -14,7 +14,7 @@ public partial class SnakeHead : CharacterBody2D
 	public delegate void EatAppleEventHandler(Vector2I pos);
 
 
-	const float MoveDuration = 0.5f;
+	private const float MoveDuration = 0.5f;
 
 	private float Angle;
 	private bool IsMoving = false;
@@ -31,12 +31,11 @@ public partial class SnakeHead : CharacterBody2D
 	// {
 	// }
 
-
 	public override void _Process(double delta)
 	{
 		var input = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
 
-		if (input != Vector2.Zero)
+		if (input != Vector2.Zero && !IsOrdinal(input))
 		{
 			Direction = new Vector2I((int)input.X, (int)input.Y);
 			Angle = input.Angle();
@@ -95,9 +94,8 @@ public partial class SnakeHead : CharacterBody2D
 		HeadSprite.Texture = OpenMouthTexture;
 
 		var timer = GetTree().CreateTimer(0.3f);
-		timer.Timeout += () =>
-		{
-			HeadSprite.Texture = NormalTexture;
-		};
+		timer.Timeout += () => HeadSprite.Texture = NormalTexture;
 	}
+
+	private static bool IsOrdinal(Vector2 v) => v.X != 0 && v.Y != 0 && Mathf.Abs(v.X) == Mathf.Abs(v.Y);
 }
