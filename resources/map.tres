@@ -1,0 +1,34 @@
+[gd_resource type="TileSet" load_steps=8 format=3 uid="uid://dyyikkqfeh58s"]
+
+[ext_resource type="Texture2D" uid="uid://dfqk6vkwipf5j" path="res://art/tiles/tile1.png" id="1_k4kc4"]
+[ext_resource type="Texture2D" uid="uid://cmroiwha6thap" path="res://art/tiles/tile2.png" id="2_bmiq4"]
+[ext_resource type="Texture2D" uid="uid://ehob0an6on4g" path="res://art/яблоко.png" id="3_t5fjn"]
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_i4jej"]
+tile_data = PackedInt32Array(0, 0, 0, 65536, 1, 0, 1, 1, 0, 65537, 0, 0)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ow2u1"]
+texture = ExtResource("1_k4kc4")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8rb7u"]
+texture = ExtResource("2_bmiq4")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5vsy2"]
+texture = ExtResource("3_t5fjn")
+texture_region_size = Vector2i(128, 128)
+0:0/next_alternative_id = 3
+0:0/0 = 0
+0:0/0/custom_data_0 = "apple"
+
+[resource]
+tile_size = Vector2i(128, 128)
+custom_data_layer_0/name = "type"
+custom_data_layer_0/type = 4
+sources/0 = SubResource("TileSetAtlasSource_ow2u1")
+sources/1 = SubResource("TileSetAtlasSource_8rb7u")
+sources/2 = SubResource("TileSetAtlasSource_5vsy2")
+pattern_0 = SubResource("TileMapPattern_i4jej")

@@ -2,51 +2,102 @@ using Godot;
 
 public partial class SnakeHead : CharacterBody2D
 {
-	const float Speed = 250f;
-	Vector2 _Destination = Vector2.Right;
-	Sprite2D _Sprite;
 
+	[Export]
+	protected TileMapLayer TerrainLayer;
+	[Export]
+	protected TileMapLayer AppleLayer;
+	[Export]
+	protected Sprite2D HeadSprite;
 
 	[Signal]
-	public delegate void ActionRequestedEventHandler();
+	public delegate void EatAppleEventHandler(Vector2I pos);
+
+
+	const float MoveDuration = 0.5f;
+
+	private float Angle;
+	private bool IsMoving = false;
+	private Vector2I TilePos;
+	private Vector2I Direction = Vector2I.Right;
 
 
 
-	public override void _PhysicsProcess(double delta)
+	private readonly Texture2D NormalTexture = GD.Load<Texture2D>("res://art/snake/голова.png");
+	private readonly Texture2D OpenMouthTexture = GD.Load<Texture2D>("res://art/snake/голова-ест.png");
+
+
+	// public override void _PhysicsProcess(double delta)
+	// {
+	// }
+
+
+	public override void _Process(double delta)
 	{
 		var input = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
 
-		if (input != Vector2.Zero) _Destination = input;
+		if (input != Vector2.Zero)
+		{
+			Direction = new Vector2I((int)input.X, (int)input.Y);
+			Angle = input.Angle();
+		}
 
-		Velocity = _Destination * Speed;
 
-		MoveAndSlide();
-
-		Rotation = _Destination.Angle();
+		TryEatApple();
+		if (!IsMoving) TryMove(Direction, Angle);
 	}
 
 	public override void _Ready()
 	{
-		_Sprite = GetNode<Sprite2D>("Sprite2D");
+		TilePos = TerrainLayer.LocalToMap(GlobalPosition);
 	}
 
-	public void Eat()
+#nullable enable
+
+	private void TryMove(Vector2I dir, float angle)
 	{
-		OpenMouth();
-		EmitSignal(SignalName.ActionRequested);
+		Vector2I targetTile = TilePos + dir;
+
+		Vector2 startPos = GlobalPosition;
+		Vector2 endPos = TerrainLayer.MapToLocal(targetTile);
+		Rotation = angle;
+
+
+		if (TerrainLayer.GetCellSourceId(targetTile) == -1) return;
+
+		IsMoving = true;
+		TilePos = targetTile;
+
+
+		var tween = CreateTween();
+
+		tween.TweenProperty(this, "global_position", endPos, MoveDuration).SetTrans(Tween.TransitionType.Linear);
+
+		tween.Finished += () =>
+		{
+			GlobalPosition = endPos;
+			IsMoving = false;
+		};
 	}
-
-
-	void OpenMouth()
+	private void TryEatApple()
 	{
-		var newTexture = GD.Load<Texture2D>("res://art/snake/голова-ест.png");
-		var normalTexture = GD.Load<Texture2D>("res://art/snake/голова.png");
-		_Sprite.Texture = newTexture;
+		TileData? tileData = AppleLayer.GetCellTileData(TilePos);
+		if (tileData == null) return;
+		var tileType = tileData.GetCustomData("type");
+		if ((string)tileType == "apple")
+		{
+			OpenMouth();
+			EmitSignal(SignalName.EatApple, TilePos);
+		}
+	}
+	private void OpenMouth()
+	{
+		HeadSprite.Texture = OpenMouthTexture;
 
 		var timer = GetTree().CreateTimer(0.3f);
 		timer.Timeout += () =>
 		{
-			_Sprite.Texture = normalTexture;
+			HeadSprite.Texture = NormalTexture;
 		};
 	}
 }
