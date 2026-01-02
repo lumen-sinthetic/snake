@@ -1,13 +1,10 @@
 using System;
 using System.Linq;
+using System.Numerics;
 using Godot;
 
 public partial class Apples : TileMapLayer
 {
-
-	[Export]
-	SnakeHead SnakeHeadInstance;
-
 	[Export]
 	TileMapLayer Terrain;
 
@@ -17,7 +14,6 @@ public partial class Apples : TileMapLayer
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		SnakeHeadInstance.EatApple += OnAppleEaten;
 		AddApple();
 	}
 
@@ -27,7 +23,7 @@ public partial class Apples : TileMapLayer
 	}
 
 
-	private void AddApple()
+	public void AddApple()
 	{
 		var cells = Terrain.GetUsedCells();
 
@@ -41,10 +37,8 @@ public partial class Apples : TileMapLayer
 	}
 
 
-	private void OnAppleEaten(Vector2I pos)
+	public void RemoveApple(Vector2I pos)
 	{
 		SetCell(pos, -1);
-		Global.Instance.AddScore();
-		AddApple();
 	}
 }

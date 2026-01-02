@@ -1,12 +1,14 @@
-[gd_scene load_steps=6 format=4 uid="uid://docgkh4m4y8t8"]
+[gd_scene load_steps=8 format=4 uid="uid://docgkh4m4y8t8"]
 
 [ext_resource type="TileSet" uid="uid://dyyikkqfeh58s" path="res://resources/map.tres" id="1_gldc4"]
 [ext_resource type="Script" uid="uid://daase1k3x18nr" path="res://scripts/apple/Apples.cs" id="2_0cso3"]
 [ext_resource type="Script" uid="uid://bmh7cssmy6edo" path="res://scripts/snake/SnakeHead.cs" id="3_0cso3"]
+[ext_resource type="Script" uid="uid://de0ilqmrfrhuy" path="res://scripts/snake/Snake.cs" id="3_ppgk2"]
 [ext_resource type="Texture2D" uid="uid://c3ls2wy4dcou8" path="res://art/snake/голова.png" id="4_2klcf"]
+[ext_resource type="PackedScene" uid="uid://c1ay12va21uei" path="res://scenes/partial/segment.tscn" id="4_2r41h"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2lpho"]
-size = Vector2(145.5, 133)
+size = Vector2(128, 128)
 
 [node name="Map" type="Node2D"]
 
@@ -14,25 +16,34 @@ size = Vector2(145.5, 133)
 tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAQAAAAAAAAACAAAAAAAAAAAAAAAAAAEAAQAAAAAAAAAAAAIAAAAAAAAAAAABAAEAAAAAAAAAAAABAAIAAQAAAAAAAAACAAEAAQAAAAAAAAACAAIAAAAAAAAAAAADAAAAAQAAAAAAAAAEAAAAAAAAAAAAAAADAAEAAAAAAAAAAAAEAAEAAQAAAAAAAAAAAAMAAQAAAAAAAAAAAAQAAAAAAAAAAAABAAMAAAAAAAAAAAABAAQAAQAAAAAAAAAAAAUAAQAAAAAAAAABAAUAAAAAAAAAAAACAAUAAQAAAAAAAAADAAUAAAAAAAAAAAACAAMAAQAAAAAAAAACAAQAAAAAAAAAAAADAAMAAAAAAAAAAAADAAQAAQAAAAAAAAAEAAMAAQAAAAAAAAAEAAQAAAAAAAAAAAAFAAMAAAAAAAAAAAAFAAQAAQAAAAAAAAAFAAAAAQAAAAAAAAAFAAEAAAAAAAAAAAAGAAAAAAAAAAAAAAAGAAEAAQAAAAAAAAAHAAAAAQAAAAAAAAAHAAEAAAAAAAAAAAAIAAAAAAAAAAAAAAAIAAEAAQAAAAAAAAAJAAAAAQAAAAAAAAAJAAEAAAAAAAAAAAAGAAMAAQAAAAAAAAAHAAIAAQAAAAAAAAAHAAMAAAAAAAAAAAAIAAIAAAAAAAAAAAAIAAMAAQAAAAAAAAAJAAIAAQAAAAAAAAAJAAMAAAAAAAAAAAAEAAUAAQAAAAAAAAAFAAUAAAAAAAAAAAAGAAQAAAAAAAAAAAAGAAUAAQAAAAAAAAAHAAQAAQAAAAAAAAAHAAUAAAAAAAAAAAAIAAQAAAAAAAAAAAAIAAUAAQAAAAAAAAAJAAQAAQAAAAAAAAAJAAUAAAAAAAAAAAAGAAIAAAAAAAAAAAADAAIAAQAAAAAAAAAEAAIAAAAAAAAAAAAFAAIAAQAAAAAAAAA=")
 tile_set = ExtResource("1_gldc4")
 
-[node name="AppleLayer" type="TileMapLayer" parent="." node_paths=PackedStringArray("SnakeHeadInstance", "Terrain")]
+[node name="AppleLayer" type="TileMapLayer" parent="." node_paths=PackedStringArray("Terrain")]
 position = Vector2(0, 1)
 tile_set = ExtResource("1_gldc4")
 script = ExtResource("2_0cso3")
-SnakeHeadInstance = NodePath("../SnakeHead")
 Terrain = NodePath("../Terrain")
 
-[node name="SnakeHead" type="CharacterBody2D" parent="." node_paths=PackedStringArray("TerrainLayer", "AppleLayer", "HeadSprite")]
-position = Vector2(77, 71)
-script = ExtResource("3_0cso3")
-TerrainLayer = NodePath("../Terrain")
-AppleLayer = NodePath("../AppleLayer")
-HeadSprite = NodePath("Sprite2D")
+[node name="Snake" type="Node2D" parent="." node_paths=PackedStringArray("SnakeHeadNode", "ApplesField")]
+position = Vector2(68, -178)
+script = ExtResource("3_ppgk2")
+SnakeHeadNode = NodePath("SnakeHead")
+SegmentScene = ExtResource("4_2r41h")
+ApplesField = NodePath("../AppleLayer")
 
-[node name="Sprite2D" type="Sprite2D" parent="SnakeHead"]
-position = Vector2(23.5, -0.9999924)
+[node name="SnakeHead" type="CharacterBody2D" parent="Snake" node_paths=PackedStringArray("TerrainLayer", "AppleLayer", "HeadSprite")]
+position = Vector2(0, 2)
+script = ExtResource("3_0cso3")
+TerrainLayer = NodePath("../../Terrain")
+AppleLayer = NodePath("../../AppleLayer")
+HeadSprite = NodePath("Sprite2D")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Snake/SnakeHead"]
+position = Vector2(33, -1)
 rotation = -1.5707964
 texture = ExtResource("4_2klcf")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SnakeHead"]
-position = Vector2(-3.2500024, -1.4999924)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Snake/SnakeHead"]
+position = Vector2(-3.0000024, -1)
 shape = SubResource("RectangleShape2D_2lpho")
+
+[node name="Segments" type="Node2D" parent="Snake"]

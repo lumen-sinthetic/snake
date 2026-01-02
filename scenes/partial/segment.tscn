@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://c1ay12va21uei"]
+
+[ext_resource type="Script" uid="uid://btm2yk4w6c06s" path="res://scripts/snake/Segment.cs" id="1_wtyh1"]
+[ext_resource type="Texture2D" uid="uid://dlghcut16q36b" path="res://art/snake/хвост.png" id="2_eo841"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aioug"]
+size = Vector2(128, 128)
+
+[node name="Segment" type="Node2D"]
+script = ExtResource("1_wtyh1")
+
+[node name="Node2D" type="Node2D" parent="."]
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D"]
+position = Vector2(-14, 1)
+rotation = 1.5707964
+texture = ExtResource("2_eo841")
+
+[node name="Area2D" type="Area2D" parent="Node2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/Area2D"]
+shape = SubResource("RectangleShape2D_aioug")
