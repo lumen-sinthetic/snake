@@ -5,39 +5,31 @@ public partial class SnakeHead : CharacterBody2D
 	[Export]
 	private Sprite2D HeadSprite;
 
-
 	[ExportGroup("Landscape")]
 	[Export] private TileMapLayer TerrainLayer;
 	[Export] private TileMapLayer AppleLayer;
+
+	[ExportGroup("Textures")]
+	[Export] private Texture2D NormalTexture;
+	[Export] private Texture2D OpenMouthTexture;
 
 
 	[Signal]
 	public delegate void EatAppleEventHandler(Vector2I pos);
 	[Signal]
-	public delegate void HeadMoveEndEventHandler(Vector2I pos);
-	// public delegate void HeadMoveStartEventHandler(Vector2I from, Vector2I to);
+	public delegate void HeadMoveEventHandler(Vector2I pos);
+
+
 	private float Angle;
 	private bool IsMoving = false;
 	private Vector2I Direction = Vector2I.Zero;
 	public Vector2I TilePos { get; private set; } = new(3, 0);
 	public Vector2I PrevPos { get; private set; } = new(2, 0);
 
-
-	private readonly Texture2D NormalTexture = GD.Load<Texture2D>("res://art/snake/голова.png");
-	private readonly Texture2D OpenMouthTexture = GD.Load<Texture2D>("res://art/snake/голова-ест.png");
-
-
-	// public override void _PhysicsProcess(double delta)
-	// {
-	// }
-
-	public override void _Process(double delta)
-	{
-	}
-
-
 	public void Move(Vector2 input, float duration)
 	{
+		if (input == Vector2.Zero && Direction == Vector2.Zero) return;
+
 		if (input != Vector2.Zero && !IsOrdinal(input))
 		{
 			Direction = new Vector2I((int)input.X, (int)input.Y);
@@ -67,11 +59,11 @@ public partial class SnakeHead : CharacterBody2D
 		if (TerrainLayer.GetCellSourceId(targetTile) == -1) return;
 
 
+		EmitSignal(SignalName.HeadMove, TilePos);
 
 		IsMoving = true;
 		PrevPos = TilePos;
 		TilePos = targetTile;
-
 
 		var tween = CreateTween();
 
@@ -81,7 +73,6 @@ public partial class SnakeHead : CharacterBody2D
 		{
 			GlobalPosition = endPos;
 			IsMoving = false;
-			EmitSignal(SignalName.HeadMoveEnd, TilePos);
 		};
 	}
 	private void TryEatApple()

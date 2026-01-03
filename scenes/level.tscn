@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=4 uid="uid://docgkh4m4y8t8"]
+[gd_scene load_steps=9 format=4 uid="uid://docgkh4m4y8t8"]
 
 [ext_resource type="TileSet" uid="uid://dyyikkqfeh58s" path="res://resources/map.tres" id="1_gldc4"]
 [ext_resource type="Script" uid="uid://daase1k3x18nr" path="res://scripts/apple/Apples.cs" id="2_0cso3"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://de0ilqmrfrhuy" path="res://scripts/snake/Snake.cs" id="3_ppgk2"]
 [ext_resource type="Texture2D" uid="uid://c3ls2wy4dcou8" path="res://art/snake/голова.png" id="4_2klcf"]
 [ext_resource type="PackedScene" uid="uid://c1ay12va21uei" path="res://scenes/partial/segment.tscn" id="4_2r41h"]
+[ext_resource type="Texture2D" uid="uid://cf4grkqsk1drj" path="res://art/snake/голова-ест.png" id="7_klq6b"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2lpho"]
 size = Vector2(128, 128)
@@ -30,12 +31,14 @@ SegmentScene = ExtResource("4_2r41h")
 ApplesField = NodePath("../AppleLayer")
 Terrain = NodePath("../Terrain")
 
-[node name="SnakeHead" type="CharacterBody2D" parent="Snake" node_paths=PackedStringArray("TerrainLayer", "AppleLayer", "HeadSprite")]
+[node name="SnakeHead" type="CharacterBody2D" parent="Snake" node_paths=PackedStringArray("HeadSprite", "TerrainLayer", "AppleLayer")]
 position = Vector2(0, 2)
 script = ExtResource("3_0cso3")
+HeadSprite = NodePath("Sprite2D")
 TerrainLayer = NodePath("../../Terrain")
 AppleLayer = NodePath("../../AppleLayer")
-HeadSprite = NodePath("Sprite2D")
+NormalTexture = ExtResource("4_2klcf")
+OpenMouthTexture = ExtResource("7_klq6b")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Snake/SnakeHead"]

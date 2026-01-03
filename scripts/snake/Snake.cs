@@ -13,18 +13,23 @@ public partial class Snake : Node2D
 	[Export] private Apples ApplesField;
 	[Export] private TileMapLayer Terrain;
 
+	private const float MoveDuration = 0.7f;
+	private const int SegmentsOffset = 1;
+	private int PathHistoryLength;
+
 	private readonly List<Segment> Segments = [];
-	private const float MoveDuration = 0.75f;
+	private List<Vector2I> PathHistory = [];
+
 
 
 	public override void _Ready()
 	{
-		SnakeHeadNode.EatApple += OnAppleEaten;
-		SnakeHeadNode.HeadMoveEnd += MoveSegments;
 		AddSegment();
+		SnakeHeadNode.EatApple += OnAppleEaten;
+		SnakeHeadNode.HeadMove += OnHeadMove;
+		PathHistoryLength = Terrain.GetUsedCells().Count;
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
 		var input = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
@@ -39,13 +44,26 @@ public partial class Snake : Node2D
 		AddSegment();
 	}
 
+	private void OnHeadMove(Vector2I pos)
+	{
+		PathHistory.Add(pos);
+		MoveSegments();
 
-	private void MoveSegments(Vector2I pos)
+		if (PathHistory.Count > PathHistoryLength)
+		{
+			var slice = PathHistory.GetRange(PathHistory.Count - PathHistoryLength, PathHistoryLength);
+			PathHistory = slice;
+		}
+	}
+
+
+	private void MoveSegments()
 	{
 		for (int i = 0; i < Segments.Count; i++)
 		{
 			var currentSegment = Segments[i];
-			Vector2 moveTo = currentSegment.NextSegment != null ? currentSegment.NextSegment.GlobalPosition : Terrain.MapToLocal(pos);
+
+			Vector2 moveTo = Terrain.MapToLocal(PathHistory[^(i + SegmentsOffset)]);
 			currentSegment.Move(moveTo, MoveDuration);
 		}
 	}
@@ -54,14 +72,15 @@ public partial class Snake : Node2D
 	{
 		var newSegment = SegmentScene.Instantiate<Segment>();
 
-		var last = Segments.Count > 0 ? Segments[^1] : null;
+		var pos = PathHistory.Count > (Segments.Count + SegmentsOffset)
+		? PathHistory[^(Segments.Count + SegmentsOffset)]
+		: SnakeHeadNode.PrevPos;
 
-		if (last != null) last.NextSegment = newSegment;
-		newSegment.PrevSegment = last;
+		if (Segments.Count > 0) Segments[^1].ToBody();
 
-		newSegment.Index = Segments.Count;
-
-		Segments.Add(newSegment);
 		AddChild(newSegment);
+		Segments.Add(newSegment);
+
+		newSegment.GlobalPosition = Terrain.MapToLocal(pos);
 	}
 }
