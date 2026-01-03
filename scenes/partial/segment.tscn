@@ -1,13 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://c1ay12va21uei"]
+[gd_scene load_steps=7 format=3 uid="uid://c1ay12va21uei"]
 
 [ext_resource type="Script" uid="uid://btm2yk4w6c06s" path="res://scripts/snake/Segment.cs" id="1_wtyh1"]
+[ext_resource type="Texture2D" uid="uid://ckcw3yaajhs1o" path="res://art/snake/вариант1.png" id="2_3kitk"]
 [ext_resource type="Texture2D" uid="uid://dlghcut16q36b" path="res://art/snake/хвост.png" id="2_eo841"]
+[ext_resource type="Texture2D" uid="uid://c3yanejx2q6h4" path="res://art/snake/вариант2.png" id="3_5ugcv"]
+[ext_resource type="Texture2D" uid="uid://dycavt2ffj7t2" path="res://art/snake/вариант3.png" id="4_v4dv7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aioug"]
 size = Vector2(128, 128)
 
-[node name="Segment" type="Node2D"]
+[node name="Segment" type="Node2D" node_paths=PackedStringArray("SegmentSprite")]
 script = ExtResource("1_wtyh1")
+SegmentSprite = NodePath("Node2D/Sprite2D")
+TailTexture = ExtResource("2_eo841")
+BodyTextures = [ExtResource("2_3kitk"), ExtResource("3_5ugcv"), ExtResource("4_v4dv7")]
 
 [node name="Node2D" type="Node2D" parent="."]
 metadata/_edit_group_ = true

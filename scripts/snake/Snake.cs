@@ -3,20 +3,18 @@ using Godot;
 
 public partial class Snake : Node2D
 {
-	[Export]
-	private SnakeHead SnakeHeadNode;
 
-	[Export]
-	private PackedScene SegmentScene;
+	[ExportGroup("BodyParts")]
+	[Export] private SnakeHead SnakeHeadNode;
+	[Export] private PackedScene SegmentScene;
 
-	[Export]
-	private Apples ApplesField;
 
-	[Export]
-	private TileMapLayer Terrain;
+	[ExportGroup("Landscape")]
+	[Export] private Apples ApplesField;
+	[Export] private TileMapLayer Terrain;
 
 	private readonly List<Segment> Segments = [];
-
+	private const float MoveDuration = 0.75f;
 
 
 	public override void _Ready()
@@ -30,12 +28,8 @@ public partial class Snake : Node2D
 	public override void _Process(double delta)
 	{
 		var input = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
-		SnakeHeadNode.Move(input);
+		SnakeHeadNode.Move(input, MoveDuration);
 	}
-
-
-	// TODO: Make segments position calculation base on tile coords
-
 
 	private void OnAppleEaten(Vector2I pos)
 	{
@@ -46,13 +40,13 @@ public partial class Snake : Node2D
 	}
 
 
-	private void MoveSegments(Vector2 headPos)
+	private void MoveSegments(Vector2I pos)
 	{
 		for (int i = 0; i < Segments.Count; i++)
 		{
 			var currentSegment = Segments[i];
-			var prevPos = CalcPreviousPosition((Node2D)currentSegment.PrevSegment ?? SnakeHeadNode, Segment.SegmentLength);
-			currentSegment.SetPosition(prevPos);
+			Vector2 moveTo = currentSegment.NextSegment != null ? currentSegment.NextSegment.GlobalPosition : Terrain.MapToLocal(pos);
+			currentSegment.Move(moveTo, MoveDuration);
 		}
 	}
 
@@ -62,22 +56,12 @@ public partial class Snake : Node2D
 
 		var last = Segments.Count > 0 ? Segments[^1] : null;
 
+		if (last != null) last.NextSegment = newSegment;
 		newSegment.PrevSegment = last;
+
 		newSegment.Index = Segments.Count;
-
-
-
-		Vector2 behindPoint = CalcPreviousPosition((Node2D)last ?? SnakeHeadNode, Segment.SegmentLength);
-		newSegment.GlobalPosition = behindPoint;
 
 		Segments.Add(newSegment);
 		AddChild(newSegment);
-	}
-
-
-
-	private static Vector2 CalcPreviousPosition(Node2D node, int margin)
-	{
-		return node.GlobalPosition - Vector2.Right.Rotated(node.Rotation) * margin;
 	}
 }

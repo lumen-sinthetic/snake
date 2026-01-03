@@ -22,12 +22,13 @@ tile_set = ExtResource("1_gldc4")
 script = ExtResource("2_0cso3")
 Terrain = NodePath("../Terrain")
 
-[node name="Snake" type="Node2D" parent="." node_paths=PackedStringArray("SnakeHeadNode", "ApplesField")]
+[node name="Snake" type="Node2D" parent="." node_paths=PackedStringArray("SnakeHeadNode", "ApplesField", "Terrain")]
 position = Vector2(68, -178)
 script = ExtResource("3_ppgk2")
 SnakeHeadNode = NodePath("SnakeHead")
 SegmentScene = ExtResource("4_2r41h")
 ApplesField = NodePath("../AppleLayer")
+Terrain = NodePath("../Terrain")
 
 [node name="SnakeHead" type="CharacterBody2D" parent="Snake" node_paths=PackedStringArray("TerrainLayer", "AppleLayer", "HeadSprite")]
 position = Vector2(0, 2)
@@ -45,5 +46,3 @@ texture = ExtResource("4_2klcf")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Snake/SnakeHead"]
 position = Vector2(-3.0000024, -1)
 shape = SubResource("RectangleShape2D_2lpho")
-
-[node name="Segments" type="Node2D" parent="Snake"]
