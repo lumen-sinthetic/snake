@@ -6,7 +6,7 @@ using Godot;
 public partial class Apples : TileMapLayer
 {
 	[Export]
-	TileMapLayer Terrain;
+	TileMapLayer Terrain = null!;
 
 	private readonly Random rng = new();
 

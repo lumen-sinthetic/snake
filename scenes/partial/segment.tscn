@@ -16,6 +16,7 @@ TailTexture = ExtResource("2_eo841")
 BodyTextures = [ExtResource("2_3kitk"), ExtResource("3_5ugcv"), ExtResource("4_v4dv7")]
 
 [node name="Node2D" type="Node2D" parent="."]
+position = Vector2(0, -1)
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Node2D"]

@@ -5,13 +5,13 @@ public partial class Snake : Node2D
 {
 
 	[ExportGroup("BodyParts")]
-	[Export] private SnakeHead SnakeHeadNode;
-	[Export] private PackedScene SegmentScene;
+	[Export] private SnakeHead SnakeHeadNode = null!;
+	[Export] private PackedScene SegmentScene = null!;
 
 
 	[ExportGroup("Landscape")]
-	[Export] private Apples ApplesField;
-	[Export] private TileMapLayer Terrain;
+	[Export] private Apples ApplesField = null!;
+	[Export] private TileMapLayer Terrain = null!;
 
 	private const float MoveDuration = 0.7f;
 	private const int SegmentsOffset = 1;
@@ -19,8 +19,6 @@ public partial class Snake : Node2D
 
 	private readonly List<Segment> Segments = [];
 	private List<Vector2I> PathHistory = [];
-
-
 
 	public override void _Ready()
 	{
@@ -62,9 +60,12 @@ public partial class Snake : Node2D
 		for (int i = 0; i < Segments.Count; i++)
 		{
 			var currentSegment = Segments[i];
+			Segment? nextSegment = currentSegment.NextSegment;
 
 			Vector2 moveTo = Terrain.MapToLocal(PathHistory[^(i + SegmentsOffset)]);
 			currentSegment.Move(moveTo, MoveDuration);
+
+			currentSegment.RotateTo((Node2D?)nextSegment ?? SnakeHeadNode);
 		}
 	}
 
@@ -76,7 +77,13 @@ public partial class Snake : Node2D
 		? PathHistory[^(Segments.Count + SegmentsOffset)]
 		: SnakeHeadNode.PrevPos;
 
-		if (Segments.Count > 0) Segments[^1].ToBody();
+		if (Segments.Count > 0)
+		{
+			var nextSegment = Segments[^1];
+			nextSegment.ToBody();
+			newSegment.NextSegment = nextSegment;
+			// newSegment.RotateTo(newSegment);
+		}
 
 		AddChild(newSegment);
 		Segments.Add(newSegment);

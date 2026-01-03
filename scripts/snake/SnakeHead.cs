@@ -3,15 +3,15 @@ using Godot;
 public partial class SnakeHead : CharacterBody2D
 {
 	[Export]
-	private Sprite2D HeadSprite;
+	private Sprite2D HeadSprite = null!;
 
 	[ExportGroup("Landscape")]
-	[Export] private TileMapLayer TerrainLayer;
-	[Export] private TileMapLayer AppleLayer;
+	[Export] private TileMapLayer TerrainLayer = null!;
+	[Export] private TileMapLayer AppleLayer = null!;
 
 	[ExportGroup("Textures")]
-	[Export] private Texture2D NormalTexture;
-	[Export] private Texture2D OpenMouthTexture;
+	[Export] private Texture2D NormalTexture = null!;
+	[Export] private Texture2D OpenMouthTexture = null!;
 
 
 	[Signal]
@@ -44,8 +44,6 @@ public partial class SnakeHead : CharacterBody2D
 	{
 		GlobalPosition = TerrainLayer.MapToLocal(TilePos);
 	}
-
-#nullable enable
 
 	private void TryMove(Vector2I dir, float angle, float duration)
 	{
