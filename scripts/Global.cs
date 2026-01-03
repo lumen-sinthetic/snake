@@ -1,14 +1,11 @@
 using Godot;
-using System;
 
 public partial class Global : Node
 {
-
-
-  public static Global Instance { get; private set; }
-
+  public static Global Instance { get; private set; } = null!;
 
   public int Score { get; private set; } = 0;
+  public bool IsLost = false;
 
 
   public void AddScore(int points = 1)

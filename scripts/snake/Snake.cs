@@ -25,12 +25,15 @@ public partial class Snake : Node2D
 		AddSegment();
 		SnakeHeadNode.EatApple += OnAppleEaten;
 		SnakeHeadNode.HeadMove += OnHeadMove;
+		SnakeHeadNode.BeforeHeadMove += PositionCheck;
 		PathHistoryLength = Terrain.GetUsedCells().Count;
 	}
 
 	public override void _Process(double delta)
 	{
+		if (Global.Instance.IsLost) return;
 		var input = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
+
 		SnakeHeadNode.Move(input, MoveDuration);
 	}
 
@@ -52,6 +55,13 @@ public partial class Snake : Node2D
 			var slice = PathHistory.GetRange(PathHistory.Count - PathHistoryLength, PathHistoryLength);
 			PathHistory = slice;
 		}
+	}
+
+
+	private void PositionCheck(Vector2I toPos)
+	{
+		var alredyTaken = Segments.Exists((segment) => Terrain.LocalToMap(segment.EndPos) == toPos);
+		if (alredyTaken) SnakeHeadNode.BumpIn();
 	}
 
 
@@ -82,7 +92,6 @@ public partial class Snake : Node2D
 			var nextSegment = Segments[^1];
 			nextSegment.ToBody();
 			newSegment.NextSegment = nextSegment;
-			// newSegment.RotateTo(newSegment);
 		}
 
 		AddChild(newSegment);

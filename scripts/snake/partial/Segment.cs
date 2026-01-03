@@ -14,6 +14,7 @@ public partial class Segment : Node2D
 	private readonly Random rng = new();
 
 	public Segment? NextSegment;
+	public Vector2 EndPos { get; private set; }
 
 	public void ToTail() => SegmentSprite.Texture = TailTexture;
 	public void ToBody() => SegmentSprite.Texture = BodyTextures[rng.Next(0, 3)];
@@ -32,6 +33,7 @@ public partial class Segment : Node2D
 
 	public void Move(Vector2 dir, float duration)
 	{
+		EndPos = dir;
 		var tween = CreateTween();
 		tween.TweenProperty(this, "global_position", dir, duration).SetTrans(Tween.TransitionType.Linear);
 	}

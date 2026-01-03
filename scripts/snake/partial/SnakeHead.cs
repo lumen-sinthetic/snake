@@ -18,6 +18,8 @@ public partial class SnakeHead : CharacterBody2D
 	public delegate void EatAppleEventHandler(Vector2I pos);
 	[Signal]
 	public delegate void HeadMoveEventHandler(Vector2I pos);
+	[Signal]
+	public delegate void BeforeHeadMoveEventHandler(Vector2I posTo);
 
 
 	private float Angle;
@@ -47,14 +49,21 @@ public partial class SnakeHead : CharacterBody2D
 
 	private void TryMove(Vector2I dir, float angle, float duration)
 	{
+
 		Vector2I targetTile = TilePos + dir;
+
+		EmitSignal(SignalName.BeforeHeadMove, targetTile);
 
 		Vector2 startPos = GlobalPosition;
 		Vector2 endPos = TerrainLayer.MapToLocal(targetTile);
 		Rotation = angle;
 
 
-		if (TerrainLayer.GetCellSourceId(targetTile) == -1) return;
+		if (TerrainLayer.GetCellSourceId(targetTile) == -1)
+		{
+			BumpIn();
+			return;
+		}
 
 
 		EmitSignal(SignalName.HeadMove, TilePos);
@@ -73,6 +82,7 @@ public partial class SnakeHead : CharacterBody2D
 			IsMoving = false;
 		};
 	}
+
 	private void TryEatApple()
 	{
 		TileData? tileData = AppleLayer.GetCellTileData(TilePos);
@@ -90,6 +100,13 @@ public partial class SnakeHead : CharacterBody2D
 
 		var timer = GetTree().CreateTimer(0.3f);
 		timer.Timeout += () => HeadSprite.Texture = NormalTexture;
+	}
+
+
+	public void BumpIn()
+	{
+		Direction = Vector2I.Zero;
+		Global.Instance.IsLost = true;
 	}
 
 	private static bool IsOrdinal(Vector2 v) => v.X != 0 && v.Y != 0 && Mathf.Abs(v.X) == Mathf.Abs(v.Y);

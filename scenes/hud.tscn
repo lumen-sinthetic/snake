@@ -1,14 +1,44 @@
 [gd_scene load_steps=2 format=3 uid="uid://bxh777768ooei"]
 
-[ext_resource type="Script" uid="uid://vtrf636p36lg" path="res://scripts/hud/Label.cs" id="1_ahhtf"]
+[ext_resource type="Script" uid="uid://df1w42knr6ntr" path="res://scripts/hud/Hud.cs" id="1_ahhtf"]
 
-[node name="Hud" type="Control"]
+[node name="Hud" type="Control" node_paths=PackedStringArray("ScoreLabel", "LoseLabel")]
 layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_right = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ahhtf")
+ScoreLabel = NodePath("Label")
+LoseLabel = NodePath("Label2")
+
+[node name="Panel" type="Panel" parent="."]
+visible = false
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Label" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -180.5
+offset_top = -197.5
+offset_right = 180.5
+offset_bottom = -120.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 56
+text = "Ты проиграл"
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
@@ -17,4 +47,14 @@ offset_top = 670.0
 offset_right = 1227.8
 offset_bottom = 737.0
 theme_override_font_sizes/font_size = 48
-script = ExtResource("1_ahhtf")
+text = "Score"
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 36.0
+offset_right = 140.0
+offset_bottom = 103.0
+theme_override_colors/font_color = Color(0.9051756, 0, 0.01994981, 1)
+theme_override_font_sizes/font_size = 48
+text = "Lose"
