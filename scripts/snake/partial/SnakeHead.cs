@@ -60,7 +60,7 @@ public partial class SnakeHead : CharacterBody2D
 		Vector2 startPos = GlobalPosition;
 		Vector2 endPos = TerrainLayer.MapToLocal(targetTile);
 
-		Rotation = angle;
+		// Rotation = angle;
 
 		if (TerrainLayer.GetCellSourceId(targetTile) == -1)
 		{
@@ -75,24 +75,24 @@ public partial class SnakeHead : CharacterBody2D
 		PrevPos = TilePos;
 		TilePos = targetTile;
 
-		var tween = CreateTween();
+		// var tween = CreateTween();
 
-		tween.TweenProperty(this, "global_position", endPos, duration).SetTrans(Tween.TransitionType.Linear);
+		// tween.TweenProperty(this, "global_position", endPos, duration).SetTrans(Tween.TransitionType.Linear);
 
-		tween.Finished += () =>
-		{
-			GlobalPosition = endPos;
-			IsMoving = false;
-		};
-
-		// var timer = GetTree().CreateTimer(duration);
-
-		// timer.Timeout += () =>
+		// tween.Finished += () =>
 		// {
 		// 	GlobalPosition = endPos;
-		// 	Rotation = angle;
 		// 	IsMoving = false;
 		// };
+
+		var timer = GetTree().CreateTimer(duration);
+
+		timer.Timeout += () =>
+		{
+			GlobalPosition = endPos;
+			Rotation = angle;
+			IsMoving = false;
+		};
 	}
 
 	private void TryEatApple()
