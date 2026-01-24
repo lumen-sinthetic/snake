@@ -5,10 +5,14 @@ public partial class Apples : TileMapLayer
 {
 	[Export]
 	TileMapLayer Terrain = null!;
+	[Export]
+	Snake SnakeInstance = null!;
+
 
 	private readonly Random rng = new();
 
 	private const int _startingApplesCount = 3;
+	private const int _maxCreationAttempts = 5;
 
 
 	// Called when the node enters the scene tree for the first time.
@@ -27,15 +31,26 @@ public partial class Apples : TileMapLayer
 	{
 		var cells = Terrain.GetUsedCells();
 
-		var minCell = cells.Min();
-		var maxCell = cells.Max();
+		int attemptsCount = 0;
 
-		var xPos = rng.Next(minCell.X, maxCell.X + 1);
-		var yPos = rng.Next(minCell.Y, maxCell.Y + 1);
+		do
+		{
+			var minCell = cells.Min();
+			var maxCell = cells.Max();
+
+			var xPos = rng.Next(minCell.X, maxCell.X + 1);
+			var yPos = rng.Next(minCell.Y, maxCell.Y + 1);
+			var readyPos = new Vector2I(xPos, yPos);
 
 
-		int randomResId = rng.Next(6, 9);
-		SetCell(new(xPos, yPos), randomResId, new(0, 0));
+			if (!SnakeInstance.CheckPresence(readyPos))
+			{
+				int randomResId = rng.Next(6, 9);
+				SetCell(readyPos, randomResId, new(0, 0));
+				break;
+			}
+			attemptsCount++;
+		} while (attemptsCount < _maxCreationAttempts);
 	}
 
 

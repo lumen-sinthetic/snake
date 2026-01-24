@@ -73,9 +73,10 @@ public partial class Snake : Node2D
 			Segment? nextSegment = currentSegment.NextSegment;
 
 			Vector2 moveTo = Terrain.MapToLocal(PathHistory[^(i + SegmentsOffset)]);
-			currentSegment.Move(moveTo, MoveDuration, (Node2D?)nextSegment ?? SnakeHeadNode);
+			Node2D prevTarget = (Node2D?)nextSegment ?? SnakeHeadNode;
 
-			// currentSegment.RotateTo((Node2D?)nextSegment ?? SnakeHeadNode);
+			currentSegment.Move(moveTo, MoveDuration, prevTarget);
+			currentSegment.RotateTo(prevTarget);
 		}
 	}
 
@@ -99,4 +100,6 @@ public partial class Snake : Node2D
 
 		newSegment.GlobalPosition = Terrain.MapToLocal(pos);
 	}
+
+	public bool CheckPresence(Vector2I point) => PathHistory.Exists((pos) => pos == point);
 }
