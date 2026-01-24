@@ -73,10 +73,10 @@ public partial class Snake : Node2D
 			Segment? nextSegment = currentSegment.NextSegment;
 
 			Vector2 moveTo = Terrain.MapToLocal(PathHistory[^(i + SegmentsOffset)]);
-			Node2D prevTarget = (Node2D?)nextSegment ?? SnakeHeadNode;
+			Node2D nextTarget = (Node2D?)nextSegment ?? SnakeHeadNode;
 
-			currentSegment.Move(moveTo, MoveDuration, prevTarget);
-			currentSegment.RotateTo(prevTarget);
+			currentSegment.Move(moveTo, MoveDuration, nextTarget);
+			// currentSegment.RotateTo(prevTarget);
 		}
 	}
 
@@ -93,6 +93,7 @@ public partial class Snake : Node2D
 			var nextSegment = Segments[^1];
 			nextSegment.ToBody();
 			newSegment.NextSegment = nextSegment;
+			nextSegment.PrevSegment = newSegment;
 		}
 
 		AddChild(newSegment);
