@@ -1,6 +1,4 @@
 using System;
-using System.Linq;
-using System.Numerics;
 using Godot;
 
 public partial class Apples : TileMapLayer
@@ -10,11 +8,13 @@ public partial class Apples : TileMapLayer
 
 	private readonly Random rng = new();
 
+	private const int _startingApplesCount = 3;
+
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		AddApple();
+		for (int i = 0; i < _startingApplesCount; i++) AddApple();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -33,7 +33,9 @@ public partial class Apples : TileMapLayer
 		var xPos = rng.Next(minCell.X, maxCell.X + 1);
 		var yPos = rng.Next(minCell.Y, maxCell.Y + 1);
 
-		SetCell(new(xPos, yPos), 2, new(0, 0));
+
+		int randomResId = rng.Next(6, 9);
+		SetCell(new(xPos, yPos), randomResId, new(0, 0));
 	}
 
 

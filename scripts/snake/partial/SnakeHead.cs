@@ -100,7 +100,7 @@ public partial class SnakeHead : CharacterBody2D
 		TileData? tileData = AppleLayer.GetCellTileData(TilePos);
 		if (tileData == null) return;
 		var tileType = tileData.GetCustomData("type");
-		if ((string)tileType == "apple")
+		if ((string)tileType == "food")
 		{
 			OpenMouth();
 			EmitSignal(SignalName.EatApple, TilePos);
