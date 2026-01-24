@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bhc03nxfajc0s"
-path="res://.godot/imported/tail.png-4a3ee1cecf11bbc09facbecc4226a7aa.ctex"
+uid="uid://bet42nrlqduod"
+path="res://.godot/imported/поворотная-часть.png-282074248b953666e0abc76276825b7e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/edited snake/tail.png"
-dest_files=["res://.godot/imported/tail.png-4a3ee1cecf11bbc09facbecc4226a7aa.ctex"]
+source_file="res://art/legacy/поворотная-часть.png"
+dest_files=["res://.godot/imported/поворотная-часть.png-282074248b953666e0abc76276825b7e.ctex"]
 
 [params]
 

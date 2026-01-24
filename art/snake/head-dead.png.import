@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bet42nrlqduod"
-path="res://.godot/imported/поворотная-часть.png-a5b138c5ddae4a2cc58e24a0f822b896.ctex"
+uid="uid://c77njsc5lpe35"
+path="res://.godot/imported/head-dead.png-2de088b773864319011e806cac237607.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/snake/поворотная-часть.png"
-dest_files=["res://.godot/imported/поворотная-часть.png-a5b138c5ddae4a2cc58e24a0f822b896.ctex"]
+source_file="res://art/snake/head-dead.png"
+dest_files=["res://.godot/imported/head-dead.png-2de088b773864319011e806cac237607.ctex"]
 
 [params]
 

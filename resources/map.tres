@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dfqk6vkwipf5j" path="res://art/tiles/tile1.png" id="1_k4kc4"]
 [ext_resource type="Texture2D" uid="uid://cmroiwha6thap" path="res://art/tiles/tile2.png" id="2_bmiq4"]
-[ext_resource type="Texture2D" uid="uid://ehob0an6on4g" path="res://art/яблоко.png" id="3_t5fjn"]
+[ext_resource type="Texture2D" uid="uid://ehob0an6on4g" path="res://art/legacy/яблоко.png" id="3_k4kc4"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_i4jej"]
 tile_data = PackedInt32Array(0, 0, 0, 65536, 1, 0, 1, 1, 0, 65537, 0, 0)
@@ -18,7 +18,7 @@ texture_region_size = Vector2i(128, 128)
 0:0/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5vsy2"]
-texture = ExtResource("3_t5fjn")
+texture = ExtResource("3_k4kc4")
 texture_region_size = Vector2i(128, 128)
 0:0/next_alternative_id = 3
 0:0/0 = 0

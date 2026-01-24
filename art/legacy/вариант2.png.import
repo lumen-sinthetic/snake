@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://datqqsrr37rpw"
-path="res://.godot/imported/turned-tail.png-e45be509534bf7083afe5b0b41d4e314.ctex"
+uid="uid://c3yanejx2q6h4"
+path="res://.godot/imported/вариант2.png-d5146ad04ebb971e0ae00a0e384abf0f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/edited snake/turned-tail.png"
-dest_files=["res://.godot/imported/turned-tail.png-e45be509534bf7083afe5b0b41d4e314.ctex"]
+source_file="res://art/legacy/вариант2.png"
+dest_files=["res://.godot/imported/вариант2.png-d5146ad04ebb971e0ae00a0e384abf0f.ctex"]
 
 [params]
 

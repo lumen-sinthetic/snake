@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c3yanejx2q6h4"
-path="res://.godot/imported/вариант2.png-0b45413e338c412115e6ad482d23937a.ctex"
+uid="uid://ckcw3yaajhs1o"
+path="res://.godot/imported/вариант1.png-e3cfa03c5794a06e5a0136806e281c55.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/snake/вариант2.png"
-dest_files=["res://.godot/imported/вариант2.png-0b45413e338c412115e6ad482d23937a.ctex"]
+source_file="res://art/legacy/вариант1.png"
+dest_files=["res://.godot/imported/вариант1.png-e3cfa03c5794a06e5a0136806e281c55.ctex"]
 
 [params]
 

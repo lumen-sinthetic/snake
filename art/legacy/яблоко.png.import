@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dycavt2ffj7t2"
-path="res://.godot/imported/вариант3.png-be56a1e116c3d2fdf26032515d89b678.ctex"
+uid="uid://ehob0an6on4g"
+path="res://.godot/imported/яблоко.png-2f9c56eb3e018f1d51b2256d1f37adde.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/snake/вариант3.png"
-dest_files=["res://.godot/imported/вариант3.png-be56a1e116c3d2fdf26032515d89b678.ctex"]
+source_file="res://art/legacy/яблоко.png"
+dest_files=["res://.godot/imported/яблоко.png-2f9c56eb3e018f1d51b2256d1f37adde.ctex"]
 
 [params]
 
