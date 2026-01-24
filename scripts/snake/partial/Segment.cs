@@ -1,5 +1,6 @@
 using System;
 using Godot;
+using Scripts.Utils;
 
 
 public partial class Segment : Node2D
@@ -9,32 +10,34 @@ public partial class Segment : Node2D
 
 	[ExportGroup("Textures")]
 	[Export] private Texture2D TailTexture = null!;
-	[Export] private Texture2D[] BodyTextures = new Texture2D[3];
+	[Export] private Texture2D BodyTexture = null!;
+	[Export] private Texture2D TurnedBodyTexture = null!;
 
-	private readonly Random rng = new();
+
+	// private readonly Random rng = new();
 
 	public Segment? NextSegment;
 	public Vector2 EndPos { get; private set; }
 
 	public void ToTail() => SegmentSprite.Texture = TailTexture;
-	public void ToBody() => SegmentSprite.Texture = BodyTextures[rng.Next(0, 3)];
+	public void ToBody() => SegmentSprite.Texture = BodyTexture;
 
-	public void RotateTo(Node2D target)
+	private float CalculateAngle(Node2D target)
 	{
-		// 1. Получаем вектор на цель
 		Vector2 direction = target.GlobalPosition - GlobalPosition;
 
-		// 2. Вычисляем угол (в радианах)
 		float angle = direction.Angle();
 
-		// 3. Поворачиваем ноду
-		Rotation = angle;
+		return angle;
 	}
 
-	public void Move(Vector2 dir, float duration)
+	async public void Move(Vector2 dir, float duration, Node2D next)
 	{
 		EndPos = dir;
+
 		var tween = CreateTween();
-		tween.TweenProperty(this, "global_position", dir, duration).SetTrans(Tween.TransitionType.Linear);
+		tween.SetTrans(Tween.TransitionType.Linear);
+		tween.TweenProperty(this, "global_position", dir, duration);
+		tween.TweenProperty(this, "rotation", CalculateAngle(next), 0);
 	}
 }

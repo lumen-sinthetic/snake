@@ -1,4 +1,5 @@
 using Godot;
+using Scripts.Utils;
 
 public partial class SnakeHead : CharacterBody2D
 {
@@ -12,6 +13,8 @@ public partial class SnakeHead : CharacterBody2D
 	[ExportGroup("Textures")]
 	[Export] private Texture2D NormalTexture = null!;
 	[Export] private Texture2D OpenMouthTexture = null!;
+	[Export] private Texture2D DeadTexture = null!;
+
 
 
 	[Signal]
@@ -32,7 +35,7 @@ public partial class SnakeHead : CharacterBody2D
 	{
 		if (input == Vector2.Zero && Direction == Vector2.Zero) return;
 
-		if (input != Vector2.Zero && !IsOrdinal(input))
+		if (input != Vector2.Zero && !VectorUtils.IsOrdinal(input))
 		{
 			Direction = new Vector2I((int)input.X, (int)input.Y);
 			Angle = input.Angle();
@@ -56,8 +59,8 @@ public partial class SnakeHead : CharacterBody2D
 
 		Vector2 startPos = GlobalPosition;
 		Vector2 endPos = TerrainLayer.MapToLocal(targetTile);
-		Rotation = angle;
 
+		Rotation = angle;
 
 		if (TerrainLayer.GetCellSourceId(targetTile) == -1)
 		{
@@ -81,6 +84,15 @@ public partial class SnakeHead : CharacterBody2D
 			GlobalPosition = endPos;
 			IsMoving = false;
 		};
+
+		// var timer = GetTree().CreateTimer(duration);
+
+		// timer.Timeout += () =>
+		// {
+		// 	GlobalPosition = endPos;
+		// 	Rotation = angle;
+		// 	IsMoving = false;
+		// };
 	}
 
 	private void TryEatApple()
@@ -106,8 +118,7 @@ public partial class SnakeHead : CharacterBody2D
 	public void BumpIn()
 	{
 		Direction = Vector2I.Zero;
+		HeadSprite.Texture = DeadTexture;
 		Global.Instance.IsLost = true;
 	}
-
-	private static bool IsOrdinal(Vector2 v) => v.X != 0 && v.Y != 0 && Mathf.Abs(v.X) == Mathf.Abs(v.Y);
 }

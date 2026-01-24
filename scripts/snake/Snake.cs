@@ -13,7 +13,7 @@ public partial class Snake : Node2D
 	[Export] private Apples ApplesField = null!;
 	[Export] private TileMapLayer Terrain = null!;
 
-	private const float MoveDuration = 0.7f;
+	private const float MoveDuration = 0.8f;
 	private const int SegmentsOffset = 1;
 	private int PathHistoryLength;
 
@@ -73,9 +73,9 @@ public partial class Snake : Node2D
 			Segment? nextSegment = currentSegment.NextSegment;
 
 			Vector2 moveTo = Terrain.MapToLocal(PathHistory[^(i + SegmentsOffset)]);
-			currentSegment.Move(moveTo, MoveDuration);
+			currentSegment.Move(moveTo, MoveDuration, (Node2D?)nextSegment ?? SnakeHeadNode);
 
-			currentSegment.RotateTo((Node2D?)nextSegment ?? SnakeHeadNode);
+			// currentSegment.RotateTo((Node2D?)nextSegment ?? SnakeHeadNode);
 		}
 	}
 
