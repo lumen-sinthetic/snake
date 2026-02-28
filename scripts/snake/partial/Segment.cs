@@ -52,18 +52,17 @@ public partial class Segment : Node2D
 	{
 		EndPos = dir;
 
-		// var tween = CreateTween();
-		// tween.SetTrans(Tween.TransitionType.Linear);
-		// tween.TweenProperty(this, "global_position", dir, duration);
-		// tween.TweenProperty(this, "rotation", CalculateAngle(next), 0);
-
 		var angle = CalculateAngle(next);
 		Rotation = angle;
 
-		await ToSignal(GetTree().CreateTimer(duration), "timeout");
+		var tween = CreateTween();
+		tween.SetTrans(Tween.TransitionType.Linear);
+		tween.TweenProperty(this, "global_position", dir, duration);
+
+		// await ToSignal(GetTree().CreateTimer(duration), "timeout");
 
 
-		GlobalPosition = dir;
+		// GlobalPosition = dir;
 		// TurnSegment(next.GlobalPosition);
 
 		// if (PrevSegment is null) return;

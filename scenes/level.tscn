@@ -45,9 +45,9 @@ OpenMouthTexture = ExtResource("7_klq6b")
 DeadTexture = ExtResource("8_b121j")
 
 [node name="Sprite2D" type="Sprite2D" parent="Snake/SnakeHead"]
-position = Vector2(-12.999999, 0.99999356)
+position = Vector2(22, -1.0000029)
 rotation = -1.5707964
-scale = Vector2(0.8497633, 0.8497633)
+scale = Vector2(0.90123385, 0.90123373)
 texture = ExtResource("4_2klcf")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Snake/SnakeHead"]
